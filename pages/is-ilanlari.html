@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İş İlanları – A&D Global Work</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="../index.html" class="logo"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+    <nav class="nav" id="nav">
+      <a href="../index.html" class="nav__link">Ana Sayfa</a>
+      <a href="nitelikli-isciler.html" class="nav__link">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html" class="nav__link">Normal İşçiler</a>
+      <a href="yatirimcilar.html" class="nav__link">Yatırımcılar</a>
+      <a href="is-ilanlari.html" class="nav__link active">İş İlanları</a>
+    </nav>
+    <div class="header__actions">
+      <a href="is-ilanlari.html" class="btn btn--outline">İş Ara</a>
+      <a href="ilan-ver.html" class="btn btn--primary">İlan Ver</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">Ana Sayfa</a><span>/</span> İş İlanları</div>
+    <h1>Tüm İş İlanları</h1>
+    <p>2.500'den fazla aktif ilan arasından size en uygun fırsatı bulun.</p>
+    <div class="hero__search" style="margin-top:24px;">
+      <div class="search-box" style="max-width:640px;">
+        <input type="text" placeholder="Pozisyon, şirket veya konum..." class="search-box__input" id="searchInput" oninput="filterJobs()" />
+        <select class="search-box__select" id="panelFilter" onchange="filterJobs()">
+          <option value="">Tüm Paneller</option>
+          <option value="skilled">Nitelikli İşçiler</option>
+          <option value="regular">Normal İşçiler</option>
+        </select>
+        <button class="btn btn--primary search-box__btn" onclick="filterJobs()">Ara</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="filters" style="top:68px;">
+  <div class="container filters__inner">
+    <select class="filter-select" id="categoryFilter" onchange="filterJobs()">
+      <option value="">Tüm Kategoriler</option>
+      <option value="turizm">Turizm</option>
+      <option value="insaat">İnşaat</option>
+      <option value="bahce">Bahçe</option>
+      <option value="saglik">Sağlık</option>
+      <option value="teknoloji">Teknoloji</option>
+      <option value="tarim">Tarım</option>
+      <option value="temizlik">Temizlik</option>
+      <option value="guvenlik">Güvenlik</option>
+      <option value="lojistik">Lojistik</option>
+      <option value="gida">Gıda</option>
+    </select>
+    <select class="filter-select" id="typeFilter" onchange="filterJobs()">
+      <option value="">Tüm Türler</option>
+      <option value="Tam Zamanlı">Tam Zamanlı</option>
+      <option value="Yarı Zamanlı">Yarı Zamanlı</option>
+      <option value="Mevsimlik">Mevsimlik</option>
+    </select>
+    <select class="filter-select" id="sortFilter" onchange="filterJobs()">
+      <option value="newest">En Yeni</option>
+      <option value="az">A–Z</option>
+    </select>
+    <span class="filter-count" id="filterCount"></span>
+  </div>
+</div>
+
+<section class="section section--gray" style="padding-top:40px;">
+  <div class="container">
+    <div class="jobs__grid" id="jobsGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-state__icon">🔍</div>
+      <h3>İlan Bulunamadı</h3>
+      <p>Farklı anahtar kelime veya filtre deneyin.</p>
+      <a href="ilan-ver.html" class="btn btn--primary" style="margin-top:16px;">İlan Ver</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container cta-section__inner">
+    <div>
+      <h2>Aradığınızı Bulamadınız mı?</h2>
+      <p>İlan verin, sizi doğru adaylarla buluşturalım.</p>
+    </div>
+    <div class="cta-section__btns">
+      <a href="ilan-ver.html" class="btn btn--white">İlan Ver</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="../index.html" class="logo logo--light"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+      <p>Uluslararası insan kaynakları alanında güvenilir çözüm ortağınız.</p>
+    </div>
+    <div class="footer__links">
+      <h5>Platform</h5>
+      <a href="nitelikli-isciler.html">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html">Normal İşçiler</a>
+      <a href="yatirimcilar.html">Yatırımcılar</a>
+      <a href="is-ilanlari.html">İş İlanları</a>
+    </div>
+    <div class="footer__links">
+      <h5>Şirket</h5>
+      <a href="hakkimizda.html">Hakkımızda</a>
+      <a href="ilan-ver.html">İlan Ver</a>
+      <a href="iletisim.html">İletişim</a>
+    </div>
+    <div class="footer__contact">
+      <h5>İletişim</h5>
+      <p>📧 info@adglobalwork.com</p>
+      <p>📞 +90 533 824 02 94</p>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 A&D Global Work. Tüm hakları saklıdır.</p></div>
+</footer>
+
+<script src="../js/data.js"></script>
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav').classList.toggle('open');
+});
+
+// Read URL params
+const params = new URLSearchParams(window.location.search);
+if (params.get('q')) document.getElementById('searchInput').value = params.get('q');
+if (params.get('cat')) document.getElementById('categoryFilter').value = params.get('cat');
+
+function filterJobs() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const panel = document.getElementById('panelFilter').value;
+  const category = document.getElementById('categoryFilter').value;
+  const type = document.getElementById('typeFilter').value;
+  const sort = document.getElementById('sortFilter').value;
+
+  let jobs = [...JOBS];
+  if (q) jobs = jobs.filter(j =>
+    j.title.toLowerCase().includes(q) ||
+    j.company.toLowerCase().includes(q) ||
+    j.location.toLowerCase().includes(q)
+  );
+  if (panel) jobs = jobs.filter(j => j.panel === panel);
+  if (category) jobs = jobs.filter(j => j.category === category);
+  if (type) jobs = jobs.filter(j => j.type === type);
+  if (sort === 'az') jobs.sort((a, b) => a.title.localeCompare(b.title, 'tr'));
+
+  document.getElementById('filterCount').textContent = `${jobs.length} ilan bulundu`;
+  const grid = document.getElementById('jobsGrid');
+  const empty = document.getElementById('emptyState');
+  if (jobs.length === 0) { grid.innerHTML = ''; empty.style.display = ''; return; }
+  empty.style.display = 'none';
+
+  grid.innerHTML = jobs.map(job => {
+    const badgeClass = job.panel === 'skilled' ? 'badge--skilled' : 'badge--regular';
+    const panelLabel = job.panel === 'skilled' ? 'Nitelikli' : 'Genel';
+    const logoColor = job.panel === 'skilled' ? '' : 'background:#d1fae5;color:#059669;';
+    return `
+    <div class="job-card">
+      <div class="job-card__header">
+        <div class="job-card__company">
+          <div class="job-card__logo" style="${logoColor}">${job.companyInitial}</div>
+          <div>
+            <div class="job-card__company-name">${job.company}</div>
+            <div class="job-card__location">📍 ${job.location}</div>
+          </div>
+        </div>
+        <span class="job-card__badge ${badgeClass}">${panelLabel}</span>
+      </div>
+      <div class="job-card__title">${job.title}</div>
+      <div class="job-card__desc">${job.desc}</div>
+      <div class="job-card__footer">
+        <div class="job-card__meta">
+          <span class="job-card__tag">🕐 ${job.type}</span>
+          <span class="job-card__tag">💼 ${job.experience}</span>
+          <span class="job-card__tag">📅 ${job.posted}</span>
+        </div>
+        <div class="job-card__salary">${job.salary}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+filterJobs();
+</script>
+</body>
+</html>

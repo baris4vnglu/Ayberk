@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İletişim – A&D Global Work</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="../index.html" class="logo"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+    <nav class="nav" id="nav">
+      <a href="../index.html" class="nav__link">Ana Sayfa</a>
+      <a href="nitelikli-isciler.html" class="nav__link">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html" class="nav__link">Normal İşçiler</a>
+      <a href="yatirimcilar.html" class="nav__link">Yatırımcılar</a>
+      <a href="is-ilanlari.html" class="nav__link">İş İlanları</a>
+    </nav>
+    <div class="header__actions">
+      <a href="is-ilanlari.html" class="btn btn--outline">İş Ara</a>
+      <a href="ilan-ver.html" class="btn btn--primary">İlan Ver</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">Ana Sayfa</a><span>/</span> İletişim</div>
+    <h1>İletişime Geçin</h1>
+    <p>Sorularınız için uzman ekibimiz size yardımcı olmaktan mutluluk duyar.</p>
+  </div>
+</section>
+
+<section class="section section--gray">
+  <div class="container" style="display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start;">
+
+    <div>
+      <h2 class="section__title" style="margin-bottom:24px;">Bize Ulaşın</h2>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#fff;border-radius:12px;padding:24px;border:1px solid #e2e8f0;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">📧</div>
+          <strong>E-posta</strong>
+          <p style="color:#64748b;font-size:.9rem;margin-top:4px;">info@adglobalwork.com</p>
+        </div>
+        <div style="background:#fff;border-radius:12px;padding:24px;border:1px solid #e2e8f0;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">📞</div>
+          <strong>Telefon & WhatsApp</strong>
+          <p style="color:#64748b;font-size:.9rem;margin-top:4px;">+90 533 824 02 94</p>
+        </div>
+        <div style="background:#fff;border-radius:12px;padding:24px;border:1px solid #e2e8f0;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">🌍</div>
+          <strong>Hizmet Bölgesi</strong>
+          <p style="color:#64748b;font-size:.9rem;margin-top:4px;">Türkiye ve 40+ ülke</p>
+        </div>
+        <div style="background:#fff;border-radius:12px;padding:24px;border:1px solid #e2e8f0;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">🕐</div>
+          <strong>Çalışma Saatleri</strong>
+          <p style="color:#64748b;font-size:.9rem;margin-top:4px;">Pzt–Cmt: 09:00 – 18:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3 style="margin-bottom:24px;font-size:1.2rem;">Mesaj Gönderin</h3>
+      <div id="contactSuccess" class="alert alert--success" style="display:none;">Mesajınız alındı! En kısa sürede geri dönüş yapacağız.</div>
+      <form onsubmit="submitContact(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Ad Soyad *</label>
+            <input type="text" required placeholder="Ahmet Yılmaz" />
+          </div>
+          <div class="form-group">
+            <label>E-posta *</label>
+            <input type="email" required placeholder="ornek@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Telefon</label>
+            <input type="tel" placeholder="+90 5XX XXX XX XX" />
+          </div>
+          <div class="form-group">
+            <label>Konu</label>
+            <select>
+              <option>İş Başvurusu</option>
+              <option>İlan Ver</option>
+              <option>Yatırım Danışmanlığı</option>
+              <option>Genel Bilgi</option>
+              <option>Diğer</option>
+            </select>
+          </div>
+          <div class="form-group form-group--full">
+            <label>Mesajınız *</label>
+            <textarea required placeholder="Mesajınızı buraya yazın..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg btn--block" style="margin-top:16px;">Gönder</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="../index.html" class="logo logo--light"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+      <p>Uluslararası insan kaynakları alanında güvenilir çözüm ortağınız.</p>
+    </div>
+    <div class="footer__links">
+      <h5>Platform</h5>
+      <a href="nitelikli-isciler.html">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html">Normal İşçiler</a>
+      <a href="yatirimcilar.html">Yatırımcılar</a>
+      <a href="is-ilanlari.html">İş İlanları</a>
+    </div>
+    <div class="footer__links">
+      <h5>Şirket</h5>
+      <a href="hakkimizda.html">Hakkımızda</a>
+      <a href="ilan-ver.html">İlan Ver</a>
+      <a href="iletisim.html">İletişim</a>
+    </div>
+    <div class="footer__contact">
+      <h5>İletişim</h5>
+      <p>📧 info@adglobalwork.com</p>
+      <p>📞 +90 533 824 02 94</p>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 A&D Global Work. Tüm hakları saklıdır.</p></div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav').classList.toggle('open');
+});
+function submitContact(e) {
+  e.preventDefault();
+  document.getElementById('contactSuccess').style.display = '';
+  e.target.reset();
+}
+</script>
+</body>
+</html>
