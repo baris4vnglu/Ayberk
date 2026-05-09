@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nitelikli İşçiler – A&D Global Work</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="../index.html" class="logo"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+    <nav class="nav" id="nav">
+      <a href="../index.html"          class="nav__link" data-i18n="nav.home">Ana Sayfa</a>
+      <a href="nitelikli-isciler.html" class="nav__link active" data-i18n="nav.skilled">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html"    class="nav__link" data-i18n="nav.regular">Normal İşçiler</a>
+      <a href="yatirimcilar.html"      class="nav__link" data-i18n="nav.investors">Yatırımcılar</a>
+      <a href="is-ilanlari.html"       class="nav__link" data-i18n="nav.listings">İş İlanları</a>
+    </nav>
+    <div class="header__actions">
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="is-ilanlari.html" class="btn btn--outline" data-i18n="nav.search">İş Ara</a>
+      <a href="ilan-ver.html"    class="btn btn--primary" data-i18n="nav.post">İlan Ver</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero" style="background:linear-gradient(135deg,#0f172a 0%,#1344b0 100%);">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../index.html" data-i18n="nav.home">Ana Sayfa</a><span>/</span>
+      <span data-i18n="nav.skilled">Nitelikli İşçiler</span>
+    </div>
+    <div class="page-hero__badge" style="color:#93c5fd;" data-i18n="skilled.badge">Nitelikli İş Gücü</div>
+    <h1 data-i18n="skilled.title">Nitelikli İşçiler Platformu</h1>
+    <p data-i18n="skilled.sub">Turizm, inşaat ve bahçe alanında uzman pozisyonlar.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- CATEGORY CARDS -->
+    <div id="categoryView">
+      <div class="section__header">
+        <div>
+          <h2 class="section__title" data-i18n="skilled.pick">Sektör Seçin</h2>
+          <p class="section__sub" data-i18n="skilled.pickSub">Sektöre tıklayın, alt pozisyonları görün</p>
+        </div>
+      </div>
+      <div class="categories__grid" id="categoriesGrid" style="grid-template-columns:repeat(3,1fr);"></div>
+    </div>
+
+    <!-- SUBCATEGORY VIEW (hidden initially) -->
+    <div id="subcatView" style="display:none;">
+      <button class="btn btn--outline btn--sm" id="backBtn" onclick="showCategories()" style="margin-bottom:28px;" data-i18n="skilled.back">← Kategoriye Dön</button>
+      <div class="subcats__header">
+        <span id="subcatIcon" style="font-size:2rem;"></span>
+        <h2 class="subcats__title" id="subcatTitle"></h2>
+      </div>
+      <div class="subcats__grid" id="subcatsGrid"></div>
+      <div style="margin-top:36px;padding:28px;background:var(--gray);border-radius:var(--radius);text-align:center;">
+        <p style="color:var(--text-light);margin-bottom:16px;" data-i18n="skilled.noJobs">Bu kategoride şu an ilan bulunmuyor.</p>
+        <a href="ilan-ver.html" class="btn btn--primary" data-i18n="skilled.cta.btn">İlan Ver</a>
+        <a href="iletisim.html" class="btn btn--outline" style="margin-left:10px;" data-i18n="skilled.contact">Başvuru için İletişime Geç</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container cta-section__inner">
+    <div>
+      <h2 data-i18n="skilled.cta.title">Nitelikli Personel mi Arıyorsunuz?</h2>
+      <p data-i18n="skilled.cta.sub">Hemen ilan verin, uzman adaylara ulaşın.</p>
+    </div>
+    <div class="cta-section__btns">
+      <a href="ilan-ver.html" class="btn btn--white" data-i18n="skilled.cta.btn">İlan Ver</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="../index.html" class="logo logo--light"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+      <p data-i18n="footer.brand.desc">Uluslararası insan kaynakları alanında güvenilir çözüm ortağınız.</p>
+    </div>
+    <div class="footer__links">
+      <h5 data-i18n="footer.platform">Platform</h5>
+      <a href="nitelikli-isciler.html" data-i18n="nav.skilled">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html"    data-i18n="nav.regular">Normal İşçiler</a>
+      <a href="yatirimcilar.html"      data-i18n="nav.investors">Yatırımcılar</a>
+      <a href="is-ilanlari.html"       data-i18n="nav.listings">İş İlanları</a>
+    </div>
+    <div class="footer__links">
+      <h5 data-i18n="footer.company">Şirket</h5>
+      <a href="hakkimizda.html" data-i18n="footer.about">Hakkımızda</a>
+      <a href="ilan-ver.html"   data-i18n="nav.post">İlan Ver</a>
+      <a href="iletisim.html"   data-i18n="footer.contact">İletişim</a>
+    </div>
+    <div class="footer__contact">
+      <h5 data-i18n="footer.contact">İletişim</h5>
+      <p>📧 info@adglobalwork.com</p>
+      <p>📞 +90 533 824 02 94</p>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 A&D Global Work.</p></div>
+</footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/i18n.js"></script>
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav').classList.toggle('open');
+});
+
+function renderCategories() {
+  const lang = getLang();
+  document.getElementById('categoriesGrid').innerHTML = CATEGORIES_SKILLED.map(c => `
+    <div class="cat-card" onclick="showSubcats('${c.id}', '${c.icon}')">
+      <div class="cat-card__icon">${c.icon}</div>
+      <div class="cat-card__name">${c.name[lang] || c.name.tr}</div>
+      <div class="cat-card__count">${SUBCATEGORIES[c.id].length} <span data-i18n="skilled.pos">${lang === 'en' ? 'positions' : 'pozisyon'}</span></div>
+    </div>`).join('');
+}
+
+function showSubcats(catId, icon) {
+  const lang = getLang();
+  const cat = CATEGORIES_SKILLED.find(c => c.id === catId);
+  const subs = SUBCATEGORIES[catId] || [];
+
+  document.getElementById('subcatIcon').textContent = icon;
+  document.getElementById('subcatTitle').textContent = cat ? (cat.name[lang] || cat.name.tr) : '';
+
+  document.getElementById('subcatsGrid').innerHTML = subs.map(s => `
+    <div class="subcat-card" onclick="window.location.href='iletisim.html'">
+      <span class="subcat-card__name">${s[lang] || s.tr}</span>
+      <span class="subcat-card__arrow">→</span>
+    </div>`).join('');
+
+  document.getElementById('categoryView').style.display = 'none';
+  document.getElementById('subcatView').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showCategories() {
+  document.getElementById('categoryView').style.display = '';
+  document.getElementById('subcatView').style.display = 'none';
+}
+
+// Re-render categories when language changes
+const _origApply = applyLang;
+// After i18n applies, re-render the dynamic content
+document.addEventListener('DOMContentLoaded', () => {
+  renderCategories();
+  // patch lang buttons to also re-render categories
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setTimeout(renderCategories, 10));
+  });
+});
+</script>
+</body>
+</html>

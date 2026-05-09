@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yatırımcılar – A&D Global Work</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="../index.html" class="logo"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+    <nav class="nav" id="nav">
+      <a href="../index.html" class="nav__link">Ana Sayfa</a>
+      <a href="nitelikli-isciler.html" class="nav__link">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html" class="nav__link">Normal İşçiler</a>
+      <a href="yatirimcilar.html" class="nav__link active">Yatırımcılar</a>
+      <a href="is-ilanlari.html" class="nav__link">İş İlanları</a>
+    </nav>
+    <div class="header__actions">
+      <div class="lang-toggle"><button class="lang-btn" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div>
+      <a href="is-ilanlari.html" class="btn btn--outline">İş Ara</a>
+      <a href="ilan-ver.html" class="btn btn--primary">İlan Ver</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero" style="background: linear-gradient(135deg, #78350f 0%, #d97706 100%);">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">Ana Sayfa</a><span>/</span> Yatırımcılar</div>
+    <div class="page-hero__badge" style="color:#fde68a;">Yatırım Fırsatları</div>
+    <h1>Yatırımcılar Portalı</h1>
+    <p>A&D Global Work güvencesiyle küresel ölçekte stratejik yatırım projeleri ve iş birliği fırsatları.</p>
+  </div>
+</section>
+
+<!-- TRUST STATS -->
+<section class="section section--gray">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center;">
+      <div style="background:#fff;border-radius:16px;padding:32px 20px;box-shadow:0 4px 24px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;font-weight:800;color:#d97706;">€500M+</div>
+        <div style="color:#64748b;font-size:.9rem;margin-top:6px;">Toplam Yönetilen Portföy</div>
+      </div>
+      <div style="background:#fff;border-radius:16px;padding:32px 20px;box-shadow:0 4px 24px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;font-weight:800;color:#d97706;">120+</div>
+        <div style="color:#64748b;font-size:.9rem;margin-top:6px;">Tamamlanan Proje</div>
+      </div>
+      <div style="background:#fff;border-radius:16px;padding:32px 20px;box-shadow:0 4px 24px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;font-weight:800;color:#d97706;">%19</div>
+        <div style="color:#64748b;font-size:.9rem;margin-top:6px;">Ortalama Yıllık ROI</div>
+      </div>
+      <div style="background:#fff;border-radius:16px;padding:32px 20px;box-shadow:0 4px 24px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;font-weight:800;color:#d97706;">40+</div>
+        <div style="color:#64748b;font-size:.9rem;margin-top:6px;">Ülkede Proje</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <h2 class="section__title">Açık Yatırım Projeleri</h2>
+        <p class="section__sub">A&D Global Work insan kaynakları güvencesiyle desteklenen projeler</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <select class="filter-select" id="sectorFilter" onchange="filterProjects()">
+          <option value="">Tüm Sektörler</option>
+          <option value="Turizm">Turizm</option>
+          <option value="İnşaat">İnşaat</option>
+          <option value="Tarım">Tarım</option>
+          <option value="Enerji">Enerji</option>
+        </select>
+      </div>
+    </div>
+    <div class="investor-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section section--gray">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">Neden A&D Global Work?</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
+      <div class="value-card">
+        <div class="value-card__icon value-card__icon--orange">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>İK Güvencesi</h4>
+        <p>Projeleriniz için nitelikli insan kaynağı teminini garantiliyoruz. İşe alımdan eğitime tüm süreç yönetimi dahil.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__icon value-card__icon--blue">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>Şeffaf Raporlama</h4>
+        <p>Aylık detaylı yatırım raporları, gerçek zamanlı panel erişimi ve bağımsız denetim desteği.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__icon value-card__icon--green">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h4>Küresel Ağ</h4>
+        <p>40'tan fazla ülkede yerel ortaklarımız ve uzman ekibimizle projenizi en hızlı şekilde hayata geçiriyoruz.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__icon value-card__icon--purple">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>Hızlı Başlangıç</h4>
+        <p>Proje onayından itibaren 30 gün içinde operasyonel faaliyete geçiş. Bürokratik süreçleri sizin adınıza yönetiyoruz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="section" style="background:linear-gradient(135deg,#78350f 0%,#d97706 100%);">
+  <div class="container" style="max-width:640px;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <h2 style="color:#fff;font-size:2rem;font-weight:800;">Yatırım Fırsatları İçin İletişime Geçin</h2>
+      <p style="color:rgba(255,255,255,.8);margin-top:10px;">Uzman ekibimiz size özel yatırım danışmanlığı sunar.</p>
+    </div>
+    <div class="form-card">
+      <div id="formSuccess" class="alert alert--success" style="display:none;">Mesajınız alındı! En kısa sürede size ulaşacağız.</div>
+      <form onsubmit="submitInvestorForm(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Ad Soyad *</label>
+            <input type="text" required placeholder="Ahmet Yılmaz" />
+          </div>
+          <div class="form-group">
+            <label>E-posta *</label>
+            <input type="email" required placeholder="ornek@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Telefon</label>
+            <input type="tel" placeholder="+90 5XX XXX XX XX" />
+          </div>
+          <div class="form-group">
+            <label>Yatırım Bütçesi</label>
+            <select>
+              <option>€100K – €500K</option>
+              <option>€500K – €1M</option>
+              <option>€1M – €5M</option>
+              <option>€5M+</option>
+            </select>
+          </div>
+          <div class="form-group form-group--full">
+            <label>İlgilendiğiniz Sektör</label>
+            <select>
+              <option>Turizm & Otelcilik</option>
+              <option>İnşaat & Gayrimenkul</option>
+              <option>Tarım & Teknoloji</option>
+              <option>Enerji</option>
+              <option>Teknoloji</option>
+              <option>Diğer</option>
+            </select>
+          </div>
+          <div class="form-group form-group--full">
+            <label>Mesajınız</label>
+            <textarea placeholder="Yatırım hedefleriniz ve beklentileriniz hakkında bilgi verin..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg btn--block" style="margin-top:16px;">Gönder</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="../index.html" class="logo logo--light"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+      <p>Uluslararası insan kaynakları alanında güvenilir çözüm ortağınız.</p>
+    </div>
+    <div class="footer__links">
+      <h5>Platform</h5>
+      <a href="nitelikli-isciler.html">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html">Normal İşçiler</a>
+      <a href="yatirimcilar.html">Yatırımcılar</a>
+      <a href="is-ilanlari.html">İş İlanları</a>
+    </div>
+    <div class="footer__links">
+      <h5>Şirket</h5>
+      <a href="hakkimizda.html">Hakkımızda</a>
+      <a href="ilan-ver.html">İlan Ver</a>
+      <a href="iletisim.html">İletişim</a>
+    </div>
+    <div class="footer__contact">
+      <h5>İletişim</h5>
+      <p>📧 info@adglobalwork.com</p>
+      <p>📞 +90 533 824 02 94</p>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 A&D Global Work. Tüm hakları saklıdır.</p></div>
+</footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/i18n.js"></script>
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav').classList.toggle('open');
+});
+
+function renderProjects(filter = '') {
+  const grid = document.getElementById('projectsGrid');
+  let projects = INVESTOR_PROJECTS;
+  if (filter) projects = projects.filter(p => p.category.includes(filter));
+  grid.innerHTML = projects.map(p => `
+    <div class="project-card">
+      <div class="project-card__head${p.colorClass}">
+        <div class="project-card__category">${p.category}</div>
+        <div class="project-card__title">${p.title}</div>
+      </div>
+      <div class="project-card__body">
+        <p class="project-card__desc">${p.desc}</p>
+        <div class="project-card__details">
+          <div class="detail-row"><span class="detail-row__label">Konum</span><span class="detail-row__value">📍 ${p.location}</span></div>
+          <div class="detail-row"><span class="detail-row__label">Bütçe</span><span class="detail-row__value">💰 ${p.budget}</span></div>
+          <div class="detail-row"><span class="detail-row__label">Tahmini ROI</span><span class="detail-row__value">📈 ${p.roi}</span></div>
+          <div class="detail-row"><span class="detail-row__label">Süre</span><span class="detail-row__value">⏱️ ${p.duration}</span></div>
+        </div>
+        <button class="btn btn--primary btn--block" onclick="document.querySelector('form').scrollIntoView({behavior:'smooth'})">İletişime Geç</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterProjects() {
+  renderProjects(document.getElementById('sectorFilter').value);
+}
+
+function submitInvestorForm(e) {
+  e.preventDefault();
+  document.getElementById('formSuccess').style.display = '';
+  e.target.style.display = 'none';
+}
+
+renderProjects();
+</script>
+</body>
+</html>

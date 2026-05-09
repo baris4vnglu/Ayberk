@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İlan Ver – A&D Global Work</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="../index.html" class="logo"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+    <nav class="nav" id="nav">
+      <a href="../index.html" class="nav__link">Ana Sayfa</a>
+      <a href="nitelikli-isciler.html" class="nav__link">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html" class="nav__link">Normal İşçiler</a>
+      <a href="yatirimcilar.html" class="nav__link">Yatırımcılar</a>
+      <a href="is-ilanlari.html" class="nav__link">İş İlanları</a>
+    </nav>
+    <div class="header__actions">
+      <div class="lang-toggle"><button class="lang-btn" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div>
+      <a href="is-ilanlari.html" class="btn btn--outline">İş Ara</a>
+      <a href="ilan-ver.html" class="btn btn--primary">İlan Ver</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">Ana Sayfa</a><span>/</span> İlan Ver</div>
+    <h1>İş İlanı Yayınla</h1>
+    <p>Nitelikli adaylara ulaşın. İlk ilanınızı ücretsiz yayınlayın.</p>
+  </div>
+</section>
+
+<section class="section section--gray">
+  <div class="container" style="max-width:820px;">
+
+    <div id="successMsg" class="alert alert--success" style="display:none;">
+      ✅ İlanınız başarıyla alındı! Ekibimiz 24 saat içinde sizinle iletişime geçecektir.
+    </div>
+
+    <div class="form-card">
+      <form id="jobForm" onsubmit="submitForm(event)">
+
+        <div class="form-section-title">Şirket Bilgileri</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Şirket Adı *</label>
+            <input type="text" required placeholder="Şirket A.Ş." />
+          </div>
+          <div class="form-group">
+            <label>Sektör *</label>
+            <select required>
+              <option value="">Seçin</option>
+              <option>Turizm & Otelcilik</option>
+              <option>İnşaat & Yapı</option>
+              <option>Bahçe & Peyzaj</option>
+              <option>Sağlık</option>
+              <option>Teknoloji</option>
+              <option>Tarım</option>
+              <option>Lojistik & Taşıma</option>
+              <option>Temizlik & Hizmet</option>
+              <option>Güvenlik</option>
+              <option>Gıda & Restoran</option>
+              <option>Tekstil</option>
+              <option>Üretim</option>
+              <option>Diğer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>İletişim Kişisi *</label>
+            <input type="text" required placeholder="Ad Soyad" />
+          </div>
+          <div class="form-group">
+            <label>E-posta *</label>
+            <input type="email" required placeholder="ik@sirket.com" />
+          </div>
+          <div class="form-group">
+            <label>Telefon *</label>
+            <input type="tel" required placeholder="+90 5XX XXX XX XX" />
+          </div>
+          <div class="form-group">
+            <label>Web Sitesi</label>
+            <input type="url" placeholder="https://sirket.com" />
+          </div>
+        </div>
+
+        <div class="form-section-title">İlan Detayları</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Pozisyon Adı *</label>
+            <input type="text" required placeholder="Örn: Otel Resepsiyonisti" />
+          </div>
+          <div class="form-group">
+            <label>Panel *</label>
+            <select required id="panelSelect" onchange="updateCategoryOptions()">
+              <option value="">Seçin</option>
+              <option value="skilled">Nitelikli İşçiler</option>
+              <option value="regular">Normal İşçiler</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Kategori *</label>
+            <select required id="categorySelect">
+              <option value="">Önce panel seçin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Çalışma Türü *</label>
+            <select required>
+              <option>Tam Zamanlı</option>
+              <option>Yarı Zamanlı</option>
+              <option>Mevsimlik</option>
+              <option>Sözleşmeli</option>
+              <option>Uzaktan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Konum *</label>
+            <input type="text" required placeholder="Şehir, Ülke" />
+          </div>
+          <div class="form-group">
+            <label>Maaş Aralığı</label>
+            <input type="text" placeholder="₺15.000 – ₺20.000 / ay" />
+          </div>
+          <div class="form-group">
+            <label>Deneyim Gereksinimi</label>
+            <select>
+              <option>Deneyim gerekmez</option>
+              <option>1+ yıl</option>
+              <option>2+ yıl</option>
+              <option>3+ yıl</option>
+              <option>5+ yıl</option>
+              <option>7+ yıl</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Dil Gereksinimi</label>
+            <input type="text" placeholder="Türkçe, İngilizce" />
+          </div>
+          <div class="form-group">
+            <label>İstihdam Sayısı</label>
+            <input type="number" min="1" placeholder="1" />
+          </div>
+          <div class="form-group">
+            <label>Başvuru Son Tarihi</label>
+            <input type="date" />
+          </div>
+          <div class="form-group form-group--full">
+            <label>İş Tanımı *</label>
+            <textarea required placeholder="Görev tanımı, sorumluluklar ve çalışma koşullarını detaylıca açıklayın..."></textarea>
+          </div>
+          <div class="form-group form-group--full">
+            <label>Aranan Nitelikler</label>
+            <textarea placeholder="Eğitim, sertifika, beceri ve diğer gereksinimler..." style="min-height:90px;"></textarea>
+          </div>
+          <div class="form-group form-group--full">
+            <label>Yan Haklar</label>
+            <textarea placeholder="Sigorta, yemek, servis, konaklama, ikramiye vb." style="min-height:80px;"></textarea>
+          </div>
+        </div>
+
+        <div class="form-section-title">Ek Bilgiler</div>
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <label>Notlar / Özel Koşullar</label>
+            <textarea placeholder="A&D Global Work ekibine iletmek istediğiniz notlar..." style="min-height:80px;"></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+          <button type="submit" class="btn btn--primary btn--lg" style="flex:1;min-width:200px;">İlanı Gönder</button>
+          <button type="reset" class="btn btn--outline" style="padding:14px 28px;">Temizle</button>
+        </div>
+        <p class="form-hint" style="margin-top:12px;">* zorunlu alanlar. İlanınız incelendikten sonra 24 saat içinde yayına alınacaktır.</p>
+      </form>
+    </div>
+
+    <!-- BENEFITS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px;">
+      <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">⚡</div>
+        <strong>Hızlı Yayın</strong>
+        <p style="font-size:.82rem;color:#64748b;margin-top:4px;">24 saat içinde onay ve yayın</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">🎯</div>
+        <strong>Hedefli Erişim</strong>
+        <p style="font-size:.82rem;color:#64748b;margin-top:4px;">10.000+ aktif aday havuzu</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">🌍</div>
+        <strong>Küresel Ağ</strong>
+        <p style="font-size:.82rem;color:#64748b;margin-top:4px;">40+ ülkeden aday erişimi</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">💰</div>
+        <strong>İlk İlan Ücretsiz</strong>
+        <p style="font-size:.82rem;color:#64748b;margin-top:4px;">Ödeme yapmadan deneyin</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="../index.html" class="logo logo--light"><span class="logo__ad">A&D</span><span class="logo__text">Global Work</span></a>
+      <p>Uluslararası insan kaynakları alanında güvenilir çözüm ortağınız.</p>
+    </div>
+    <div class="footer__links">
+      <h5>Platform</h5>
+      <a href="nitelikli-isciler.html">Nitelikli İşçiler</a>
+      <a href="normal-isciler.html">Normal İşçiler</a>
+      <a href="yatirimcilar.html">Yatırımcılar</a>
+      <a href="is-ilanlari.html">İş İlanları</a>
+    </div>
+    <div class="footer__links">
+      <h5>Şirket</h5>
+      <a href="hakkimizda.html">Hakkımızda</a>
+      <a href="ilan-ver.html">İlan Ver</a>
+      <a href="iletisim.html">İletişim</a>
+    </div>
+    <div class="footer__contact">
+      <h5>İletişim</h5>
+      <p>📧 info@adglobalwork.com</p>
+      <p>📞 +90 533 824 02 94</p>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 A&D Global Work. Tüm hakları saklıdır.</p></div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav').classList.toggle('open');
+});
+
+const CATEGORY_OPTS = {
+  skilled: ["Turizm & Otelcilik","İnşaat & Yapı","Bahçe & Peyzaj","Sağlık","Teknoloji","Tarım","Lojistik","Hukuk","Enerji"],
+  regular: ["Temizlik & Hizmet","Güvenlik","Depo & Lojistik","Tarım","Gıda & Restoran","Tekstil","Kargo & Dağıtım","Üretim"]
+};
+
+function updateCategoryOptions() {
+  const panel = document.getElementById('panelSelect').value;
+  const sel = document.getElementById('categorySelect');
+  if (!panel) { sel.innerHTML = '<option value="">Önce panel seçin</option>'; return; }
+  sel.innerHTML = '<option value="">Seçin</option>' +
+    (CATEGORY_OPTS[panel] || []).map(o => `<option>${o}</option>`).join('');
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('successMsg').style.display = '';
+  document.getElementById('jobForm').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
