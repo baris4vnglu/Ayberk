@@ -17,14 +17,12 @@
       <a href="nitelikli-isciler.html" class="nav__link">Nitelikli İşçiler</a>
       <a href="normal-isciler.html" class="nav__link active">Normal İşçiler</a>
       <a href="yatirimcilar.html" class="nav__link">Yatırımcılar</a>
-      <a href="is-ilanlari.html" class="nav__link">İş İlanları</a>
     </nav>
     <div class="header__actions">
       <div class="lang-toggle">
         <button class="lang-btn" data-lang="tr">TR</button>
         <button class="lang-btn" data-lang="en">EN</button>
       </div>
-      <a href="is-ilanlari.html" class="btn btn--outline">İş Ara</a>
       <a href="ilan-ver.html" class="btn btn--primary">İlan Ver</a>
     </div>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
@@ -42,10 +40,6 @@
 
 <section class="section">
   <div class="container">
-    <div class="alert alert--info">
-      <strong>📢 Hızlı Başvuru:</strong> Profil oluşturmanıza gerek yok. İlgili ilana tıklayın, formu doldurun ve başvurunuz anında işverene iletilsin.
-    </div>
-
     <div class="section__header">
       <div>
         <h2 class="section__title">Sektör Seçin</h2>
@@ -53,27 +47,10 @@
       </div>
     </div>
     <div class="categories__grid" id="categoriesGrid"></div>
-
-    <div class="filters">
-      <div class="filters__inner">
-        <input type="text" class="filter-search" id="searchInput" placeholder="İş veya konum ara..." oninput="filterJobs()" />
-        <select class="filter-select" id="typeFilter" onchange="filterJobs()">
-          <option value="">Tüm Türler</option>
-          <option value="Tam Zamanlı">Tam Zamanlı</option>
-          <option value="Yarı Zamanlı">Yarı Zamanlı</option>
-          <option value="Mevsimlik">Mevsimlik</option>
-        </select>
-        <span class="filter-count" id="filterCount">Yükleniyor...</span>
-      </div>
-    </div>
-
-    <div style="margin-top: 32px;">
-      <div class="jobs__grid" id="jobsGrid"></div>
-      <div class="empty-state" id="emptyState" style="display:none;">
-        <div class="empty-state__icon">🔍</div>
-        <h3>İlan Bulunamadı</h3>
-        <p>Farklı anahtar kelime veya filtre deneyin.</p>
-      </div>
+    <div style="margin-top:36px;padding:28px;background:var(--gray);border-radius:var(--radius);text-align:center;">
+      <p style="color:var(--text-light);margin-bottom:16px;">Bu kategoride şu an ilan bulunmuyor.</p>
+      <a href="ilan-ver.html" class="btn btn--primary">İlan Ver</a>
+      <a href="iletisim.html" class="btn btn--outline" style="margin-left:10px;">İletişime Geç</a>
     </div>
   </div>
 </section>
@@ -101,7 +78,6 @@
       <a href="nitelikli-isciler.html">Nitelikli İşçiler</a>
       <a href="normal-isciler.html">Normal İşçiler</a>
       <a href="yatirimcilar.html">Yatırımcılar</a>
-      <a href="is-ilanlari.html">İş İlanları</a>
     </div>
     <div class="footer__links">
       <h5>Şirket</h5>
@@ -128,64 +104,16 @@ document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('nav').classList.toggle('open');
 });
 
-let activeCategory = '';
-
 function renderCategories() {
   const grid = document.getElementById('categoriesGrid');
   grid.innerHTML = CATEGORIES_REGULAR.map(c => `
-    <div class="cat-card ${activeCategory === c.id ? 'active' : ''}" onclick="selectCategory('${c.id}')">
+    <div class="cat-card">
       <div class="cat-card__icon">${c.icon}</div>
       <div class="cat-card__name">${c.name}</div>
-      <div class="cat-card__count">${c.count} ilan</div>
-    </div>`).join('');
-}
-
-function selectCategory(id) {
-  activeCategory = activeCategory === id ? '' : id;
-  renderCategories();
-  filterJobs();
-}
-
-function filterJobs() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const type = document.getElementById('typeFilter').value;
-  let jobs = JOBS.filter(j => j.panel === 'regular');
-  if (activeCategory) jobs = jobs.filter(j => j.category === activeCategory);
-  if (q) jobs = jobs.filter(j => j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q) || j.location.toLowerCase().includes(q));
-  if (type) jobs = jobs.filter(j => j.type === type);
-
-  document.getElementById('filterCount').textContent = `${jobs.length} ilan bulundu`;
-  const grid = document.getElementById('jobsGrid');
-  const empty = document.getElementById('emptyState');
-  if (jobs.length === 0) { grid.innerHTML = ''; empty.style.display = ''; return; }
-  empty.style.display = 'none';
-  grid.innerHTML = jobs.map(job => `
-    <div class="job-card">
-      <div class="job-card__header">
-        <div class="job-card__company">
-          <div class="job-card__logo" style="background:#d1fae5;color:#059669;">${job.companyInitial}</div>
-          <div>
-            <div class="job-card__company-name">${job.company}</div>
-            <div class="job-card__location">📍 ${job.location}</div>
-          </div>
-        </div>
-        <span class="job-card__badge badge--regular">Genel</span>
-      </div>
-      <div class="job-card__title">${job.title}</div>
-      <div class="job-card__desc">${job.desc}</div>
-      <div class="job-card__footer">
-        <div class="job-card__meta">
-          <span class="job-card__tag">🕐 ${job.type}</span>
-          <span class="job-card__tag">💼 ${job.experience}</span>
-          <span class="job-card__tag">📅 ${job.posted}</span>
-        </div>
-        <div class="job-card__salary" style="color:#059669;">${job.salary}</div>
-      </div>
     </div>`).join('');
 }
 
 renderCategories();
-filterJobs();
 </script>
 </body>
 </html>
