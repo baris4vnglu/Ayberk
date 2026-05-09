@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { isRTL, type Locale } from "@/i18n/config";
+import AuthProvider from "@/components/common/AuthProvider";
 import "../globals.css";
 
 const inter = Inter({
@@ -45,7 +46,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} dir={isRTL(locale as Locale) ? "rtl" : "ltr"} suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

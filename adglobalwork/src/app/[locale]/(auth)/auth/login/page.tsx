@@ -15,6 +15,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const ROLE_REDIRECTS: Record<string, string> = {
+    worker: `/${locale}/worker`,
+    employer: `/${locale}/employer`,
+    investor: `/${locale}/investor`,
+    admin: `/${locale}/admin`,
+  };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -29,15 +36,29 @@ export default function LoginPage() {
       return;
     }
 
-    router.push(`/${locale}`);
+    // Fetch profile to redirect by role
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single() as { data: { role: string } | null; error: unknown };
+
+      const destination = profile ? (ROLE_REDIRECTS[profile.role] ?? `/${locale}`) : `/${locale}`;
+      router.push(destination);
+    } else {
+      router.push(`/${locale}`);
+    }
     router.refresh();
   }
 
   async function handleGoogle() {
     const supabase = createClient();
+    const callbackUrl = `${window.location.origin}/${locale}/auth/callback`;
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/${locale}` },
+      options: { redirectTo: callbackUrl },
     });
   }
 

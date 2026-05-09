@@ -33,10 +33,12 @@ export default function RegisterPage() {
     setError("");
 
     const supabase = createClient();
+    const callbackUrl = `${window.location.origin}/${locale}/auth/callback`;
     const { error: err } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: callbackUrl,
         data: { full_name: fullName, role, locale },
       },
     });

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, ChevronDown, LayoutDashboard, LogOut, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { locales, localeNames, type Locale } from "@/i18n/config";
+import { useUser } from "@/hooks/useUser";
+import { createClient } from "@/lib/supabase/client";
 
 const NAV_LINKS = [
   { href: "/", labelKey: "nav.home" },
@@ -15,13 +17,23 @@ const NAV_LINKS = [
   { href: "/yatirimcilar", labelKey: "nav.investors" },
 ];
 
+const DASHBOARD_ROUTES: Record<string, string> = {
+  worker: "/worker",
+  employer: "/employer",
+  investor: "/investor",
+  admin: "/admin",
+};
+
 export default function Header() {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const { user, profile, loading } = useUser();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10);
@@ -29,12 +41,33 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  // Close user menu on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
   function switchLocale(newLocale: Locale) {
-    // Replace current locale prefix in path
     const segments = pathname.split("/");
     segments[1] = newLocale;
     router.push(segments.join("/"));
   }
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push(`/${locale}`);
+    router.refresh();
+  }
+
+  const dashboardHref = profile
+    ? `/${locale}${DASHBOARD_ROUTES[profile.role] ?? "/"}`
+    : null;
 
   return (
     <header
@@ -42,7 +75,7 @@ export default function Header() {
         "sticky top-0 z-50 transition-all duration-200",
         scrolled
           ? "bg-white/95 backdrop-blur shadow-sm border-b border-gray-100"
-          : "bg-white"
+          : "bg-white border-b border-gray-100"
       )}
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
@@ -56,7 +89,8 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((link) => {
             const href = `/${locale}${link.href === "/" ? "" : link.href}`;
-            const isActive = pathname === href || (link.href !== "/" && pathname.startsWith(href));
+            const isActive =
+              pathname === href || (link.href !== "/" && pathname.startsWith(href));
             return (
               <Link
                 key={link.href}
@@ -94,18 +128,77 @@ export default function Header() {
             ))}
           </div>
 
-          <Link
-            href={`/${locale}/auth/login`}
-            className="text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2"
-          >
-            {t("nav.login")}
-          </Link>
-          <Link
-            href={`/${locale}/ilan-ver`}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-          >
-            {t("nav.post")}
-          </Link>
+          {/* Auth section */}
+          {!loading && (
+            <>
+              {user && profile ? (
+                /* User menu */
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700"
+                  >
+                    <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-xs font-bold">
+                      {(profile.full_name ?? profile.email)[0].toUpperCase()}
+                    </div>
+                    <span className="max-w-[120px] truncate">{profile.full_name ?? profile.email}</span>
+                    <ChevronDown size={14} className={cn("transition-transform", userMenuOpen && "rotate-180")} />
+                  </button>
+
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
+                      <div className="px-4 py-2 border-b border-gray-100">
+                        <p className="text-xs text-gray-400">Hesap</p>
+                        <p className="text-sm font-medium text-gray-900 truncate">{profile.email}</p>
+                      </div>
+                      {dashboardHref && (
+                        <Link
+                          href={dashboardHref}
+                          onClick={() => setUserMenuOpen(false)}
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        >
+                          <LayoutDashboard size={15} />
+                          {t("nav.dashboard")}
+                        </Link>
+                      )}
+                      <Link
+                        href={`/${locale}/${profile.role === "worker" ? "worker/profile" : "employer/company"}`}
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      >
+                        <User size={15} />
+                        Profilim
+                      </Link>
+                      <hr className="my-1" />
+                      <button
+                        onClick={() => { setUserMenuOpen(false); handleLogout(); }}
+                        className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                      >
+                        <LogOut size={15} />
+                        {t("nav.logout")}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                /* Guest buttons */
+                <>
+                  <Link
+                    href={`/${locale}/auth/login`}
+                    className="text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2"
+                  >
+                    {t("nav.login")}
+                  </Link>
+                  <Link
+                    href={`/${locale}/ilan-ver`}
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                  >
+                    {t("nav.post")}
+                  </Link>
+                </>
+              )}
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -135,7 +228,8 @@ export default function Header() {
             );
           })}
           <hr className="my-2" />
-          <div className="flex items-center gap-1 mb-2">
+          {/* Mobile locale switcher */}
+          <div className="flex items-center gap-1 mb-2 flex-wrap">
             {locales.map((loc) => (
               <button
                 key={loc}
@@ -151,20 +245,31 @@ export default function Header() {
               </button>
             ))}
           </div>
-          <Link
-            href={`/${locale}/auth/login`}
-            onClick={() => setMenuOpen(false)}
-            className="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
-          >
-            {t("nav.login")}
-          </Link>
-          <Link
-            href={`/${locale}/ilan-ver`}
-            onClick={() => setMenuOpen(false)}
-            className="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg text-center"
-          >
-            {t("nav.post")}
-          </Link>
+          {/* Mobile auth */}
+          {!loading && user && profile ? (
+            <>
+              {dashboardHref && (
+                <Link href={dashboardHref} onClick={() => setMenuOpen(false)} className="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+                  {t("nav.dashboard")}
+                </Link>
+              )}
+              <button
+                onClick={() => { setMenuOpen(false); handleLogout(); }}
+                className="px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md text-left"
+              >
+                {t("nav.logout")}
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href={`/${locale}/auth/login`} onClick={() => setMenuOpen(false)} className="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+                {t("nav.login")}
+              </Link>
+              <Link href={`/${locale}/ilan-ver`} onClick={() => setMenuOpen(false)} className="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg text-center">
+                {t("nav.post")}
+              </Link>
+            </>
+          )}
         </div>
       )}
     </header>
