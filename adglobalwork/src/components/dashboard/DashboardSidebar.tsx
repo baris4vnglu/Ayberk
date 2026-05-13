@@ -23,10 +23,9 @@ type Role = "worker" | "employer" | "investor" | "admin";
 const NAV_BY_ROLE: Record<Role, { href: string; icon: React.ReactNode; label: string }[]> = {
   worker: [
     { href: "/worker", icon: <LayoutDashboard size={18} />, label: "Panel" },
-    { href: "/worker/jobs", icon: <Briefcase size={18} />, label: "İş İlanları" },
+    { href: "/nitelikli-isciler", icon: <Briefcase size={18} />, label: "İş İlanları" },
     { href: "/worker/applications", icon: <FileText size={18} />, label: "Başvurularım" },
     { href: "/worker/messages", icon: <MessageCircle size={18} />, label: "Mesajlar" },
-    { href: "/worker/notifications", icon: <Bell size={18} />, label: "Bildirimler" },
     { href: "/worker/profile", icon: <User size={18} />, label: "Profilim" },
   ],
   employer: [

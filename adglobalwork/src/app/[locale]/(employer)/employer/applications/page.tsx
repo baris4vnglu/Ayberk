@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Calendar, FileText } from "lucide-react";
 import ApplicationStatus from "./ApplicationStatus";
+import StartConversationButton from "@/components/messages/StartConversationButton";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -102,6 +103,7 @@ export default async function EmployerApplicationsPage({ params, searchParams }:
 
             const appCoverLetter = app.cover_letter as string | null;
             const appCvUrl = app.cv_url as string | null;
+            const workerId = app.worker_id as string;
 
             return (
               <div key={app.id as string} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
@@ -144,6 +146,12 @@ export default async function EmployerApplicationsPage({ params, searchParams }:
                         <FileText size={12} /> CV İndir
                       </a>
                     )}
+                    <StartConversationButton
+                      workerId={workerId}
+                      employerId={user.id}
+                      locale={locale}
+                      role="employer"
+                    />
                     <ApplicationStatus appId={app.id as string} currentStatus={appStatus} />
                   </div>
                 </div>

@@ -19,12 +19,27 @@ export const metadata: Metadata = {
     template: "%s | A&D Global Work",
   },
   description:
-    "Türkiye'nin öncü uluslararası istihdam ve yatırım danışmanlığı platformu. Nitelikli iş gücü, küresel fırsatlar.",
-  keywords: ["iş ilanı", "nitelikli işçi", "turizm", "inşaat", "yatırım", "global work"],
+    "KKTC ve Türkiye merkezli uluslararası istihdam ve yatırım platformu. Nitelikli işçi, turizm, inşaat, tarım sektörlerinde iş ilanları.",
+  keywords: ["iş ilanı", "nitelikli işçi", "KKTC iş ilanı", "turizm işçisi", "inşaat işçisi", "yatırım", "global work", "işçi alımı"],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://adglobalwork.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "tr_TR",
     siteName: "A&D Global Work",
+    title: "A&D Global Work – Uluslararası İnsan Kaynakları",
+    description: "KKTC ve Türkiye merkezli uluslararası istihdam platformu.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "A&D Global Work",
+    description: "KKTC ve Türkiye merkezli uluslararası istihdam platformu.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

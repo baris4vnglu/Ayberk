@@ -1,21 +1,51 @@
-"use client";
-
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { useTranslations, useLocale } from "next-intl";
-import { CATEGORIES_REGULAR } from "@/components/jobs/CategoryData";
+import { getTranslations } from "next-intl/server";
+import { MapPin, Briefcase, Users, Clock } from "lucide-react";
+import JobFilters from "../nitelikli-isciler/JobFilters";
 
-type Locale = "tr" | "en" | "ar";
+interface Props {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ category?: string; job_type?: string }>;
+}
 
-export default function NormalIscilerPage() {
-  const t = useTranslations();
-  const locale = useLocale() as Locale;
+const JOB_TYPE_LABELS: Record<string, string> = {
+  full_time: "Tam Zamanlı",
+  part_time: "Yarı Zamanlı",
+  seasonal: "Mevsimlik",
+  contract: "Sözleşmeli",
+  remote: "Uzaktan",
+};
+
+export default async function NormalIscilerPage({ params, searchParams }: Props) {
+  const { locale } = await params;
+  const filters = await searchParams;
+  const t = await getTranslations();
+  const supabase = await createClient();
+
+  let query = supabase
+    .from("jobs")
+    .select(`
+      id, title, category, job_type, location, salary_min, salary_max,
+      salary_currency, openings, created_at,
+      companies (name, logo_url)
+    `)
+    .eq("status", "active")
+    .eq("panel", "regular")
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (filters.category) query = query.eq("category", filters.category);
+  if (filters.job_type) query = query.eq("job_type", filters.job_type);
+
+  const { data: jobs } = await query;
+  const jobList = (jobs ?? []) as Array<Record<string, unknown>>;
 
   return (
     <>
-      {/* Hero */}
       <section
         className="py-16 md:py-20"
-        style={{ background: "linear-gradient(135deg, #064e3b 0%, #059669 100%)" }}
+        style={{ background: "linear-gradient(135deg, #0f172a 0%, #065f46 100%)" }}
       >
         <div className="container mx-auto px-4">
           <div className="text-xs font-medium text-white/60 mb-4">
@@ -24,69 +54,84 @@ export default function NormalIscilerPage() {
             <span>{t("nav.regular")}</span>
           </div>
           <div className="inline-block bg-emerald-400/20 text-emerald-200 text-xs font-semibold rounded-full px-3 py-1 mb-4">
-            {t("regular.badge")}
+            Genel İşçiler
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3">{t("regular.title")}</h1>
           <p className="text-white/70 text-lg max-w-xl">{t("regular.sub")}</p>
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-14">
+      <section className="py-10">
         <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">{t("regular.pick")}</h2>
-            <p className="text-gray-500">{t("regular.pickSub")}</p>
-          </div>
+          <JobFilters locale={locale} currentFilters={{ ...filters, panel: "regular" }} />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {CATEGORIES_REGULAR.map((cat) => (
-              <div
-                key={cat.id}
-                className="bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:border-emerald-200 transition-all cursor-pointer"
-              >
-                <div className="text-4xl mb-3">{cat.icon}</div>
-                <div className="font-semibold text-gray-800 text-sm">{cat.name[locale] || cat.name.tr}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* No listings */}
-          <div className="mt-10 bg-gray-50 rounded-2xl p-8 text-center">
-            <p className="text-gray-500 mb-4">{t("regular.noJobs")}</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Link
-                href={`/${locale}/ilan-ver`}
-                className="bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-emerald-700 transition-colors"
-              >
-                {t("regular.cta_btn")}
-              </Link>
-              <Link
-                href={`/${locale}/iletisim`}
-                className="border border-gray-300 text-gray-700 font-medium px-5 py-2.5 rounded-xl hover:bg-gray-50 transition-colors"
-              >
-                {t("nav.contact")}
+          {jobList.length === 0 ? (
+            <div className="mt-8 bg-gray-50 rounded-2xl p-12 text-center">
+              <div className="text-4xl mb-3">🔍</div>
+              <p className="text-gray-500 mb-4">Bu kriterlere uygun ilan bulunamadı.</p>
+              <Link href={`/${locale}/employer/jobs/new`}
+                className="inline-block bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-emerald-700 transition-colors">
+                İlan Ver
               </Link>
             </div>
-          </div>
+          ) : (
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {jobList.map((job) => {
+                const company = job.companies as Record<string, unknown> | null;
+                const salaryMin = job.salary_min as number | null;
+                const salaryMax = job.salary_max as number | null;
+                const currency = job.salary_currency as string ?? "TRY";
+                const salaryText = salaryMin
+                  ? `${salaryMin.toLocaleString("tr-TR")}${salaryMax ? `–${salaryMax.toLocaleString("tr-TR")}` : "+"} ${currency}`
+                  : null;
+
+                return (
+                  <Link key={job.id as string} href={`/${locale}/jobs/${job.id as string}`}
+                    className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all p-5 flex flex-col">
+                    <div className="flex items-start gap-3 mb-3">
+                      {company?.logo_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={company.logo_url as string} alt="" className="w-10 h-10 rounded-lg object-cover shrink-0" />
+                      ) : (
+                        <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0 text-emerald-600 font-bold text-sm">
+                          {(company?.name as string ?? "?")[0]}
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 text-sm truncate">{job.title as string}</h3>
+                        <p className="text-gray-500 text-xs truncate">{company?.name as string ?? "—"}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-3">
+                      <span className="flex items-center gap-1"><MapPin size={11} /> {job.location as string}</span>
+                      <span className="flex items-center gap-1"><Briefcase size={11} /> {JOB_TYPE_LABELS[job.job_type as string] ?? job.job_type as string}</span>
+                      <span className="flex items-center gap-1"><Users size={11} /> {job.openings as number} kişi</span>
+                    </div>
+                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                      {salaryText
+                        ? <span className="text-emerald-600 font-bold text-sm">{salaryText}</span>
+                        : <span className="text-gray-400 text-xs">Maaş belirtilmemiş</span>}
+                      <span className="flex items-center gap-1 text-gray-400 text-xs">
+                        <Clock size={11} /> {new Date(job.created_at as string).toLocaleDateString("tr-TR")}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* CTA */}
-      <section
-        className="py-12"
-        style={{ background: "linear-gradient(135deg, #059669 0%, #0ea5e9 100%)" }}
-      >
+      <section className="py-12 bg-gray-900">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h2 className="text-2xl font-bold text-white mb-1">{t("regular.cta_title")}</h2>
-            <p className="text-white/80">{t("regular.cta_sub")}</p>
+            <p className="text-gray-400">{t("regular.cta_sub")}</p>
           </div>
-          <Link
-            href={`/${locale}/ilan-ver`}
-            className="bg-white text-emerald-700 font-semibold px-6 py-3 rounded-xl hover:bg-emerald-50 transition-colors shrink-0"
-          >
-            {t("regular.cta_btn")}
+          <Link href={`/${locale}/employer/jobs/new`}
+            className="bg-white text-gray-900 font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition-colors shrink-0">
+            İlan Ver
           </Link>
         </div>
       </section>

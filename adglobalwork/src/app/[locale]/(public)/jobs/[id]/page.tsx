@@ -2,10 +2,39 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MapPin, Clock, Briefcase, Users, Calendar, Eye, Building2 } from "lucide-react";
+import type { Metadata } from "next";
 import ApplyButton from "./ApplyButton";
 
 interface Props {
   params: Promise<{ locale: string; id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("jobs")
+    .select("title, description, location, companies(name)")
+    .eq("id", id)
+    .eq("status", "active")
+    .single();
+
+  if (!data) return { title: "İlan Bulunamadı" };
+
+  const d = data as Record<string, unknown>;
+  const company = d.companies as Record<string, unknown> | null;
+  const title = `${d.title as string} – ${company?.name as string ?? ""}`;
+  const description = (d.description as string ?? "").slice(0, 155);
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+    },
+  };
 }
 
 const JOB_TYPE_LABELS: Record<string, string> = {

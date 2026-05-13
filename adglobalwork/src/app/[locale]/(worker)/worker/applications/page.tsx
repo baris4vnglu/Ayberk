@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { MapPin, Briefcase, Calendar, Clock } from "lucide-react";
+import StartConversationButton from "@/components/messages/StartConversationButton";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -25,8 +26,8 @@ export default async function WorkerApplicationsPage({ params }: Props) {
   const { data: apps } = await supabase
     .from("applications")
     .select(`
-      id, status, cover_letter, created_at,
-      jobs (id, title, category, job_type, location, status,
+      id, status, cover_letter, created_at, worker_id,
+      jobs (id, title, category, job_type, location, status, employer_id,
         companies (name, logo_url)
       )
     `)
@@ -65,6 +66,8 @@ export default async function WorkerApplicationsPage({ params }: Props) {
             const jobLocation = job?.location as string | null;
             const jobJobType = job?.job_type as string | null;
             const appCoverLetter = app.cover_letter as string | null;
+            const employerId = job?.employer_id as string | null;
+            const workerId = app.worker_id as string;
 
             return (
               <div key={app.id as string} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
@@ -112,6 +115,17 @@ export default async function WorkerApplicationsPage({ params }: Props) {
                           {appCoverLetter}
                         </p>
                       </details>
+                    )}
+
+                    {employerId && (
+                      <div className="mt-3">
+                        <StartConversationButton
+                          workerId={workerId}
+                          employerId={employerId}
+                          locale={locale}
+                          role="worker"
+                        />
+                      </div>
                     )}
                   </div>
                 </div>
