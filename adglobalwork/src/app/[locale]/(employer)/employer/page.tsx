@@ -76,7 +76,7 @@ export default async function EmployerDashboard({ params }: Props) {
       {/* Quick actions */}
       <div className="flex flex-wrap gap-3">
         <Link
-          href={`/${locale}/ilan-ver`}
+          href={`/${locale}/employer/jobs/new`}
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm"
         >
           + Yeni İlan Ver
